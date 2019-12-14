@@ -1,12 +1,7 @@
 const client = require("./client");
-client.list({}, (error, todos) => {
+client.list({},(error,todos)=> {
+  console.log("successfully fetch List notes");
   console.log(todos)
-  if (!error) {
-    console.log("successfully fetch List notes");
-    console.log(todos)
-  } else {
-    console.error(error);
-  }
 });
 // client.insert(data, (error, note) => {
 //   if (!error) {
@@ -16,7 +11,7 @@ client.list({}, (error, todos) => {
 //     console.log("error");
 //   }
 // });
-let id = "2"
+let id = "2";
 // client.delete({ id: '1' }, (error, _) => {
 //   if (!error) {
 //       console.log('Note Has been successfully deleted')

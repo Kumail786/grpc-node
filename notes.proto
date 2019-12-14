@@ -1,18 +1,22 @@
 syntax = "proto3";
-service NoteService {
+service TodoService {
     rpc List (Empty) returns (TodoList){}
     // rpc Insert (Note) returns (Note){}
     // rpc Delete (DeleteRequestId) returns (Note){}
 }
+
+
 message Empty {}
+
 message Todo {
-    string id = 1;
+    string _id = 1;
     string title = 2;
     string discription = 3;
     bool done = 4;
+    int64 __v = 5;
 }
 
 
 message TodoList {
-    repeated Todo todos = 1;
+   repeated Todo todos = 1;
  }
