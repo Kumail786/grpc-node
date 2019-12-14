@@ -1,6 +1,7 @@
 const grpc = require('grpc')
 const notesProto = grpc.load('./notes.proto')
 const server = new grpc.Server()
+const uuidv1 = require('uuid/v1')
 
 const notes = [
     { id: '1', title: 'Note 1', content: 'Content 1'},
@@ -10,6 +11,12 @@ server.addService(notesProto.NoteService.service, {
     list: (_, callback) => {
         callback(null, notes)
     },
+    insert: (call, callback) => {
+        let note = call.request
+        note.id = uuidv1()
+        notes.push(note)
+        callback(null, note)
+    }
 })
 server.bind('127.0.0.1:50051', grpc.ServerCredentials.createInsecure())
 console.log('Server running at http://127.0.0.1:50051')
