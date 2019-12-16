@@ -1,8 +1,9 @@
 syntax = "proto3";
 service TodoService {
     rpc List (Empty) returns (TodoList){}
-    // rpc Insert (Note) returns (Note){}
-    // rpc Delete (DeleteRequestId) returns (Note){}
+ rpc Insert (Todo) returns (Todo){}
+    rpc Delete (DeleteRequestId) returns (Todo){}
+    rpc Update (Todo) returns (Todo) {}
 }
 
 
@@ -14,6 +15,10 @@ message Todo {
     string discription = 3;
     bool done = 4;
     int64 __v = 5;
+}
+
+message DeleteRequestId {
+    string id = 1;
 }
 
 

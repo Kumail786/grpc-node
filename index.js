@@ -18,33 +18,18 @@ mongoose.connection.once("open", () => {
 
 server.addService(notesProto.TodoService.service, {
   list: (_, callback) => {
-    console.log("andar aya");
-    Todo.find({}).then(todos => {
-      console.log(typeof todos);
-
-
-      console.log(todos)
-      callback(null, {todos : todos});
-    });
-  }
-  //   insert: (call, callback) => {
-  //     let note = call.request;
-  //     note.id = uuidv1();
-  //     notes.push(note);
-  //     callback(null, note);
-  //   },
-  //   delete: (call, callback) => {
-  //     let existingNoteIndex = notes.findIndex(n => n.id == call.request.id);
-  //     if (existingNoteIndex != -1) {
-  //       notes.splice(existingNoteIndex, 1);
-  //       callback(null, {});
-  //     } else {
-  //       callback({
-  //         code: grpc.status.NOT_FOUND,
-  //         details: "Not found"
-  //       });
-  //     }
-  //   }
+    Todo.find({})
+      .then(todos => {
+        callback(null, { todos: todos });
+      })
+      .catch(error => {
+        callback({
+          code: grpc.status.NOT_FOUND,
+          message: error.message
+        });
+      });
+  },
+ 
 });
 server.bind("127.0.0.1:50050", grpc.ServerCredentials.createInsecure());
 console.log("Server running at http://127.0.0.1:50050");
