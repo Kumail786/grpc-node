@@ -7,6 +7,24 @@ const server = new grpc.Server();
 const mongoose = require("mongoose");
 const Mongo_URI = require("./config.json").Mongo_URI;
 const Todo = require("./models/todoSchema");
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const router = require('./routes/requests')
+const body_parser = require('body-parser')
+app.use(cors())
+app.use(body_parser.json())
+
+app.get('/',(req,res)=>{
+    res.send({
+        msg : "getting default route"
+    })
+})
+app.use('/api/v1/todo/',router)
+
+app.listen(11000,()=>{
+console.log('server listening')
+})
 mongoose.connect(Mongo_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
