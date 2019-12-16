@@ -1,12 +1,12 @@
 const grpc = require("grpc");
 const protoLoader = require("@grpc/proto-loader");
-const packageDefinition = protoLoader.loadSync("./notes.proto");
+const packageDefinition = protoLoader.loadSync("./protos/notes.proto");
 const grpcLibrary = require("@grpc/grpc-js");
 const notesProto = grpcLibrary.loadPackageDefinition(packageDefinition);
 const server = new grpc.Server();
 const mongoose = require("mongoose");
 const Mongo_URI = require("./config.json").Mongo_URI;
-const Todo = require("./todoSchema");
+const Todo = require("./models/todoSchema");
 mongoose.connect(Mongo_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
