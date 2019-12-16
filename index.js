@@ -42,7 +42,19 @@ server.addService(notesProto.TodoService.service, {
       });
     }
   },
-  
+  delete: async (call, callback) => {
+    let id = call.request.id;
+    const todo = await Todo.findByIdAndDelete(id);
+    if (todo) {
+      callback(null, todo);
+    } else {
+      callback({
+        code: grpc.status.NOT_FOUND,
+        message: "Todo Not Deleted"
+      });
+    }
+  },
+ 
 });
 server.bind("127.0.0.1:50050", grpc.ServerCredentials.createInsecure());
 console.log("Server running at http://127.0.0.1:50050");
