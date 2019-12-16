@@ -29,7 +29,20 @@ server.addService(notesProto.TodoService.service, {
         });
       });
   },
- 
+  insert: async (call, callback) => {
+    let addtodo = call.request;
+    const todo = await new Todo(addtodo);
+    const todoAdded = await todo.save();
+    if (todoAdded) {
+      callback(null, todoAdded);
+    } else {
+      callback({
+        code: grpc.status.NOT_FOUND,
+        message: "Todo Not Added"
+      });
+    }
+  },
+  
 });
 server.bind("127.0.0.1:50050", grpc.ServerCredentials.createInsecure());
 console.log("Server running at http://127.0.0.1:50050");
